@@ -14,6 +14,7 @@ func main() {
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"https://nlw-pocket-web-production.up.railway.app", "http://localhost:5173"},
+		AllowHeaders:     []string{"Content-Type"},
 		AllowMethods:     []string{"GET", "POST", "DELETE", "OPTIONS"},
 		AllowCredentials: true,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
