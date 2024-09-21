@@ -45,6 +45,6 @@ func DeleteCompletion() gin.HandlerFunc {
 			return
 		}
 
-		ctx.Status(http.StatusOK)
+		ctx.JSON(http.StatusOK, gin.H{"message": "Completion deleted"})
 	}
 }

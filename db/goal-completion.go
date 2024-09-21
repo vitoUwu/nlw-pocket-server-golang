@@ -1,7 +1,6 @@
 package db
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -47,12 +46,12 @@ func (db *Database) CountGoalUpToWeekCompletions(goalId string) (int, error) {
 func (db *Database) GetGoalCompletionById(id string) (*GoalCompletion, error) {
 	var goalCompletion GoalCompletion
 
-	err := db.Gorm.Model(&GoalCompletion{}).Where("id = ?", id).Take(&goalCompletion).Error
+	err := db.Gorm.Model(&GoalCompletion{}).Where("id = ?", id).First(&goalCompletion).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return nil, fmt.Errorf("goalCompletion with id %s not found", id)
+	return &goalCompletion, nil
 }
 
 func (db *Database) CreateGoalCompletion(goalId string) (*GoalCompletion, error) {
