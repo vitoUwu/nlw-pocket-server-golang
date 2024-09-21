@@ -24,7 +24,7 @@ func AuthMiddleware() gin.HandlerFunc {
 				return
 			}
 			userId = user.ID
-			ctx.Header("Set-Cookie", fmt.Sprintf("userId=%s; Max-Age=0; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT", userId))
+			ctx.Header("Set-Cookie", fmt.Sprintf("userId=%s; Max-Age=2592000; Path=/; Secure; HttpOnly; SameSite=none", userId))
 			ctx.Set("userId", userId)
 
 			ctx.Next()
