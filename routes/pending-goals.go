@@ -51,6 +51,6 @@ func GetPendingGoals() gin.HandlerFunc {
 			}
 		}
 
-		ctx.JSON(http.StatusOK, gin.H{"pendingGoals": pendingGoals})
+		ctx.JSON(http.StatusOK, pendingGoals)
 	}
 }
