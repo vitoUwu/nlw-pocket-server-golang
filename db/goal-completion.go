@@ -46,13 +46,10 @@ func (db *Database) CountGoalUpToWeekCompletions(goalId string) (int, error) {
 
 func (db *Database) GetGoalCompletionById(id string) (*GoalCompletion, error) {
 	var goalCompletion GoalCompletion
-	result := db.Gorm.First(&goalCompletion).Where("id = ?", id).Take(&goalCompletion)
-	if result.Error != nil {
-		return nil, result.Error
-	}
 
-	if result.RowsAffected == 1 {
-		return &goalCompletion, nil
+	err := db.Gorm.Model(&GoalCompletion{}).Where("id = ?", id).Take(&goalCompletion).Error
+	if err != nil {
+		return nil, err
 	}
 
 	return nil, fmt.Errorf("goalCompletion with id %s not found", id)

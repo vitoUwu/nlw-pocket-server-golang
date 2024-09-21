@@ -9,12 +9,14 @@ import (
 )
 
 type DeleteGoalCompletionBody struct {
+	GoalId       string `json:"goalId"`
 	CompletionId string `json:"completionId"`
 }
 
 func DeleteCompletion() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		userId := ctx.GetString("userId")
+
 		var body DeleteGoalCompletionBody
 		if err := ctx.ShouldBindJSON(&body); err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
