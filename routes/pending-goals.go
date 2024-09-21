@@ -40,15 +40,14 @@ func GetPendingGoals() gin.HandlerFunc {
 					break
 				}
 			}
-			if goal.DesiredWeeklyFrequency > completionCount {
-				pendingGoals = append(pendingGoals, PendingGoal{
-					ID:                     goal.ID,
-					Title:                  goal.Title,
-					DesiredWeeklyFrequency: goal.DesiredWeeklyFrequency,
-					CreatedAt:              goal.CreatedAt,
-					CompletionCount:        completionCount,
-				})
-			}
+
+			pendingGoals = append(pendingGoals, PendingGoal{
+				ID:                     goal.ID,
+				Title:                  goal.Title,
+				DesiredWeeklyFrequency: goal.DesiredWeeklyFrequency,
+				CreatedAt:              goal.CreatedAt,
+				CompletionCount:        completionCount,
+			})
 		}
 
 		ctx.JSON(http.StatusOK, pendingGoals)
