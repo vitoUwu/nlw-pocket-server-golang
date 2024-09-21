@@ -41,7 +41,7 @@ func (db *Database) CreateGoal(goal CreateGoal) (*Goal, error) {
 
 func (db *Database) GetGoalById(id string, userId string) (*Goal, error) {
 	var goal Goal
-	result := db.Gorm.First(&goal).Where("id = ? AND user_id = ?", id, userId).Take(&goal)
+	result := db.Gorm.Model(&Goal{}).Where("id = ? AND user_id = ?", id, userId).Take(&goal)
 	if result.Error != nil {
 		return nil, result.Error
 	}
