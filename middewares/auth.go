@@ -17,7 +17,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		userId, err := ctx.Cookie("userId")
 
 		if err != nil || userId == "" {
-			user, err := Db.AddUser()
+			user, err := Db.CreateUser()
 			if err != nil {
 				ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 				ctx.Abort()
