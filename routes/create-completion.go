@@ -46,12 +46,12 @@ func CreateCompletion() gin.HandlerFunc {
 			return
 		}
 
-		_, err = Db.CreateGoalCompletion(body.GoalId)
+		completion, err := Db.CreateGoalCompletion(body.GoalId)
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 
-		ctx.Status(http.StatusCreated)
+		ctx.JSON(http.StatusCreated, completion)
 	}
 }
