@@ -14,6 +14,20 @@ type CreateGoalBody struct {
 	DesiredWeeklyFrequency int    `json:"desiredWeeklyFrequency" binding:"required"`
 }
 
+type CreateGoalResponse struct {
+	Title                  string `json:"title"`
+	DesiredWeeklyFrequency int    `json:"desiredWeeklyFrequency"`
+}
+
+// @Summary Endpoint to create a goal
+// @Schemes
+// @Accept json
+// @Produce json
+// @Success 201 {object} CreateGoalResponse
+// @Failure 400 {object} Error
+// @Failure 500 {object} Error
+// @Param body body CreateGoalBody true "body params"
+// @Router /goals [post]
 func CreateGoal() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		body := CreateGoalBody{}

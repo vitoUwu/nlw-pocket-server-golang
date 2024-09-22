@@ -13,6 +13,20 @@ type DeleteGoalCompletionBody struct {
 	CompletionId string `json:"completionId"`
 }
 
+type DeleteGoalCompletionResponse struct {
+	Message string `json:"message"`
+}
+
+// @Summary Endpoint to delete a goal completion
+// @Schemes
+// @Accept json
+// @Produce json
+// @Success 200 {object} DeleteGoalCompletionResponse
+// @Failure 400 {object} Error
+// @Failure 404 {object} Error
+// @Failure 500 {object} Error
+// @Param body body DeleteGoalCompletionBody true "body params"
+// @Router /completions [delete]
 func DeleteCompletion() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		userId := ctx.GetString("userId")

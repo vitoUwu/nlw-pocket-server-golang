@@ -15,6 +15,14 @@ type PendingGoal struct {
 	CompletionCount        int       `json:"completionCount"`
 }
 
+// @Summary Endpoint to get pending goals
+// @Schemes
+// @Accept json
+// @Produce json
+// @Success 200 {array} PendingGoal
+// @Failure 400 {object} Error
+// @Failure 500 {object} Error
+// @Router /pending-goals [get]
 func GetPendingGoals() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		userId := ctx.GetString("userId")

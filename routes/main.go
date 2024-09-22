@@ -9,3 +9,7 @@ var (
 type Goal struct {
 	db.Goal
 }
+
+type Error struct {
+	Error string `json:"error"`
+}

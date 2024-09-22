@@ -1,0 +1,226 @@
+definitions:
+  db.GoalCompletion:
+    properties:
+      createdAt:
+        type: string
+      goalId:
+        type: string
+      id:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  db.SummaryGoal:
+    properties:
+      completedAt:
+        type: string
+      goalId:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+    type: object
+  db.WeekSummary:
+    properties:
+      completed:
+        type: integer
+      goalsPerDay:
+        additionalProperties:
+          items:
+            $ref: '#/definitions/db.SummaryGoal'
+          type: array
+        type: object
+      total:
+        type: integer
+    type: object
+  routes.CreateGoalBody:
+    properties:
+      desiredWeeklyFrequency:
+        type: integer
+      title:
+        type: string
+    required:
+    - desiredWeeklyFrequency
+    - title
+    type: object
+  routes.CreateGoalCompletionBody:
+    properties:
+      goalId:
+        type: string
+    type: object
+  routes.CreateGoalResponse:
+    properties:
+      desiredWeeklyFrequency:
+        type: integer
+      title:
+        type: string
+    type: object
+  routes.DeleteGoalCompletionBody:
+    properties:
+      completionId:
+        type: string
+      goalId:
+        type: string
+    type: object
+  routes.DeleteGoalCompletionResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  routes.Error:
+    properties:
+      error:
+        type: string
+    type: object
+  routes.PendingGoal:
+    properties:
+      completionCount:
+        type: integer
+      createdAt:
+        type: string
+      desiredWeeklyFrequency:
+        type: integer
+      id:
+        type: string
+      title:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /completions:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/routes.DeleteGoalCompletionBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/routes.DeleteGoalCompletionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/routes.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/routes.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/routes.Error'
+      summary: Endpoint to delete a goal completion
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/routes.CreateGoalCompletionBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/db.GoalCompletion'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/routes.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/routes.Error'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/routes.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/routes.Error'
+      summary: Endpoint to create a goal completion
+  /goals:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/routes.CreateGoalBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/routes.CreateGoalResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/routes.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/routes.Error'
+      summary: Endpoint to create a goal
+  /pending-goals:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/routes.PendingGoal'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/routes.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/routes.Error'
+      summary: Endpoint to get pending goals
+  /summary:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/db.WeekSummary'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/routes.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/routes.Error'
+      summary: Endpoint to get week summary
+swagger: "2.0"

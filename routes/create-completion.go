@@ -12,6 +12,17 @@ type CreateGoalCompletionBody struct {
 	GoalId string `json:"goalId"`
 }
 
+// @Summary Endpoint to create a goal completion
+// @Schemes
+// @Accept json
+// @Produce json
+// @Success 201 {object} db.GoalCompletion
+// @Failure 400 {object} Error
+// @Failure 404 {object} Error
+// @Failure 409 {object} Error
+// @Failure 500 {object} Error
+// @Param body body CreateGoalCompletionBody true "body params"
+// @Router /completions [post]
 func CreateCompletion() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		userId := ctx.GetString("userId")
